@@ -97,6 +97,11 @@ public class Weisplendid_float {
         Random r = new Random();
         int num1 = r.nextInt(10000);
         int num2 = r.nextInt(10000);
+        if(num1 < num2){
+            int t = num1;
+            num1 = num2;
+            num2 = t;
+        }
         String numA = String.valueOf(0.01*num1);
         String numB = String.valueOf(0.01*num2);
         BigDecimal BDnumA = new BigDecimal(numA);
