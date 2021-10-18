@@ -1,11 +1,5 @@
 import java.util.*;
-import java.text.DecimalFormat;
 import java.math.BigDecimal;
-
-import org.omg.CORBA.PUBLIC_MEMBER;
-
-import jdk.internal.dynalink.beans.StaticClass;
-
 
 public class Oral_calculation_exercise {
 	
@@ -15,32 +9,66 @@ public class Oral_calculation_exercise {
 	public static void main(String[] args) {
 		
 		String Grade;
-		int grade = 0, questionNumber, score;
+		int grade = 0, questionNumber = 0, score;
 		
 		
 		
-		
-		System.out.println("Please enter your grade?");
-		Grade = sc.next();
-		if(Grade.equals("grade")) {
-			grade = sc.nextInt();
-		}else {
-//			exit(-1);
+		while(true) {
+			System.out.println("Please enter your grade?");
+			Grade = sc.nextLine();
+			Grade.trim();
+			Grade = Grade.replaceAll(" + ", " ");
+			try {
+				grade = Integer.valueOf(Grade.substring(6));
+				Grade = Grade.substring(0,5).toLowerCase();
+			} catch (Exception e) {
+				System.out.println("Error, please input like: \"grade 5\",the number should between 1 to 6, try again");
+				continue;
+			}
+			if(Grade.equals("grade")) {
+				if(grade < 1 || grade > 6) {
+					System.out.println("Error, the grade should between 1 to 6, try again");
+					continue;
+				}
+				break;
+			}else {
+				System.out.println("Error, please input like: \"grade 5\", try again");
+			}
 		}
-		grade = Integer.valueOf(grade);
-		System.out.println("Please enter the number of questions?");
-		questionNumber = sc.nextInt();
+		
+		while(true) {
+			System.out.println("Please enter the number of questions?");
+			String questionNumberString = sc.nextLine();
+			try {
+				questionNumber = Integer.valueOf(questionNumberString);
+			} catch (Exception e) {
+				System.out.println("Error, please input an integer, try again");
+				continue;
+			}
+			if(questionNumber > 0) 
+				break;
+			else {
+				System.out.println("Error, please input a positive number, try again");
+				continue;
+			}
+		}
+		
 		int count_i = questionNumber;
 		while(count_i > 0) {
 			select(grade);
 			count_i--;
 		}
-		System.out.print("end!");
+		System.out.print("end! ");
 		score = 100*correctNumber/questionNumber;
 		if(score < 100 && score >= 0) {
-			System.out.print("There are " + (questionNumber - correctNumber) + " wrong questions, your score is " + score + ".");
+			if(questionNumber - correctNumber == 1)
+				System.out.println("There is 1 wrong question, your score is " + score + ".");
+			else
+				System.out.println("There are " + (questionNumber - correctNumber) + " wrong questions, your score is " + score + ".");
 		}else if(score == 100) {
-			System.out.print("All right, that's great! your score is " + score + ".");
+			System.out.println("All right, that's great! your score is " + score + ".");
+		}else {
+			System.out.println("Program error");
 		}
 	}
 	public static void select(int gradenum) {
@@ -95,14 +123,19 @@ public class Oral_calculation_exercise {
 		int i = new java.util.Random().nextBoolean() ? 1 : 0;
 		boolean output = false;
 		boolean test = true;
-		Scanner sc=new Scanner(System.in);
 		
 		if(i == 1){
 			int num1 = (int)(Math.random()*100);//乘数1
 			int num2 = (int)(Math.random()*100);//乘数2
-			System.out.println(num1 +" * "+ num2 +" = ?");
+			System.out.println(num1 +" * "+ num2 +" =?");
 			int num3 = num1*num2;//乘积
-			int c=sc.nextInt();
+			String Res = sc.nextLine();
+			int c;
+			try {
+				c = Integer.parseInt(Res);
+			} catch (Exception e) {
+				return false;
+			}
 			if(c == num3){
 				output = true;
 			} else {
@@ -115,9 +148,15 @@ public class Oral_calculation_exercise {
 				int num5 = (int)(Math.random()*99 + 1);//被除数
 				int num6 = (int)(Math.random()*99 + 1);//商				
 				int num4 = num5*num6;//除数				
-				if(num4 < 100){
-					System.out.println(num4 +" / "+ num5 +" = ?");
-					int c=sc.nextInt();
+				if(num4 < 500){
+					System.out.println(num4 +" / "+ num5 +" =?");
+					String Res = sc.nextLine();
+					int c;
+					try {
+						c = Integer.parseInt(Res);
+					} catch (Exception e) {
+						return false;
+					}
 					if(c == num6){
 						output = true;
 					} else {
@@ -133,15 +172,19 @@ public class Oral_calculation_exercise {
 	public static boolean Cal_AS(){
 		int i = new java.util.Random().nextBoolean() ? 1 : 0;
 		boolean output = false;
-		boolean test = true;
-		Scanner sc=new Scanner(System.in);
 		
 		if(i == 1){
 			int num1 = (int)(Math.random()*100);
 			int num2 = (int)(Math.random()*100);
-			System.out.println(num1 +" + "+ num2 +" = ?");
+			System.out.println(num1 +" + "+ num2 +" =?");
 			int num3 = num1+num2;
-			int c=sc.nextInt();
+			String Res = sc.nextLine();
+			int c;
+			try {
+				c = Integer.parseInt(Res);
+			} catch (Exception e) {
+				return false;
+			}
 			if(c == num3){
 				output = true;
 			} else {
@@ -159,8 +202,14 @@ public class Oral_calculation_exercise {
 			} 
                                   				
             int num6 = num4-num5;			
-            System.out.println(num4 +" -"+ num5 +" = ?");
-			int c=sc.nextInt();
+            System.out.println(num4 +" - "+ num5 +" =?");
+            String Res = sc.nextLine();
+			int c;
+			try {
+				c = Integer.parseInt(Res);
+			} catch (Exception e) {
+				return false;
+			}
 			if(c == num6){
 				output = true;
 			} else {
@@ -207,11 +256,16 @@ public class Oral_calculation_exercise {
 //        System.out.println(BDnumA.add(BDnumB));
 //        System.out.println(num1+num2);
         
-        System.out.println(BDnumA.toString()+"+"+BDnumB.toString()+"=?");
-        String resBD= BDnumA.add(BDnumB).toString();
-        Scanner sc = new Scanner(System.in);
-        String res = sc.nextLine();
-        if(res.endsWith(resBD)){
+        System.out.println(BDnumA.stripTrailingZeros().toPlainString()+" + "+BDnumB.stripTrailingZeros().toPlainString()+" =?");
+        double resBD= BDnumA.add(BDnumB).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        String Res = sc.nextLine();
+        double res;
+        try {
+        	res = Double.parseDouble(Res);
+		} catch (Exception e) {
+			return false;
+		}
+        if(res == resBD){
             return true;
         }else{
             return false;
@@ -222,6 +276,11 @@ public class Oral_calculation_exercise {
         Random r = new Random();
         int num1 = r.nextInt(10000);
         int num2 = r.nextInt(10000);
+        if(num1 < num2) {
+        	int t = num1;
+        	num1 = num2;
+        	num2 = t;
+        }
         String numA = String.valueOf(0.01*num1);
         String numB = String.valueOf(0.01*num2);
         BigDecimal BDnumA = new BigDecimal(numA);
@@ -234,11 +293,16 @@ public class Oral_calculation_exercise {
 //        System.out.println(BDnumA.add(BDnumB));
         //System.out.println(num1-num2);
         
-        System.out.println(BDnumA.toString()+"-"+BDnumB.toString()+"=?");
-        String resBD= BDnumA.subtract(BDnumB).toString();
-        Scanner sc = new Scanner(System.in);
-        String res = sc.nextLine();
-        if(res.endsWith(resBD)){
+        System.out.println(BDnumA.stripTrailingZeros().toPlainString()+" - "+BDnumB.stripTrailingZeros().toPlainString()+" =?");
+        double resBD= BDnumA.subtract(BDnumB).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        String Res = sc.nextLine();
+        double res;
+        try {
+        	res = Double.parseDouble(Res);
+		} catch (Exception e) {
+			return false;
+		}
+        if(res == resBD){
             return true;
         }else{
             return false;
@@ -247,30 +311,35 @@ public class Oral_calculation_exercise {
 
     static boolean float_cal_mtu(){
         Random r = new Random();
-        int num1 = r.nextInt(10000);
-        int num2 = r.nextInt(10000);
+        int num1 = r.nextInt(500);
+        int num2 = r.nextInt(500);
         if(num1 < num2){
             int t = num1;
             num1 = num2;
             num2 = t;
         }
-        String numA = String.valueOf(0.01*num1);
-        String numB = String.valueOf(0.01*num2);
+        String numA = String.valueOf(0.1*num1);
+        String numB = String.valueOf(0.1*num2);
         BigDecimal BDnumA = new BigDecimal(numA);
-        BDnumA = BDnumA.setScale(2,BigDecimal.ROUND_HALF_UP);
+        BDnumA = BDnumA.setScale(1,BigDecimal.ROUND_HALF_UP);
         BigDecimal BDnumB = new BigDecimal(numB);
-        BDnumB = BDnumB.setScale(2,BigDecimal.ROUND_HALF_UP);
+        BDnumB = BDnumB.setScale(1,BigDecimal.ROUND_HALF_UP);
         
 //        System.out.println(BDnumA);
 //        System.out.println(BDnumB);
 //        System.out.println(BDnumA.add(BDnumB));
         //System.out.println(num1*num2);
         
-        System.out.println(BDnumA.toString()+"*"+BDnumB.toString()+"=?");
-        String resBD= BDnumA.multiply(BDnumB).setScale(2,BigDecimal.ROUND_HALF_UP).toString();
-        Scanner sc = new Scanner(System.in);
-        String res = sc.nextLine();
-        if(res.endsWith(resBD)){
+        System.out.println(BDnumA.stripTrailingZeros().toPlainString()+" * "+BDnumB.stripTrailingZeros().toPlainString()+" =?");
+        double resBD= BDnumA.multiply(BDnumB).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        String Res = sc.nextLine();
+        double res;
+        try {
+        	res = Double.parseDouble(Res);
+		} catch (Exception e) {
+			return false;
+		}
+        if(res == resBD){
             return true;
         }else{
             return false;
@@ -279,25 +348,27 @@ public class Oral_calculation_exercise {
 
     static boolean float_cal_div(){
         Random r = new Random();
-        int num1 = r.nextInt(10000);
-        int num2 = r.nextInt(10000);
+        int num1 = r.nextInt(5000);	//商
+        int num2 = r.nextInt(499)+1;	//除数
         String numA = String.valueOf(0.01*num1);
-        String numB = String.valueOf(0.01*num2);
+        String numB = String.valueOf(0.1*num2);
         BigDecimal BDnumA = new BigDecimal(numA);
         BDnumA = BDnumA.setScale(2,BigDecimal.ROUND_HALF_UP);
         BigDecimal BDnumB = new BigDecimal(numB);
-        BDnumB = BDnumB.setScale(2,BigDecimal.ROUND_HALF_UP);
+        BDnumB = BDnumB.setScale(1,BigDecimal.ROUND_HALF_UP);
+        BigDecimal BDnumC = BDnumA.multiply(BDnumB);
         
-//        System.out.println(BDnumA);
-//        System.out.println(BDnumB);
-//        System.out.println(BDnumA.divide(BDnumB));
-//        System.out.println(1.0*num1/num2);
         
-        System.out.println(BDnumA.toString()+"/"+BDnumB.toString()+"=?");
-        String resBD= BDnumA.divide(BDnumB,2).toString();
-        Scanner sc = new Scanner(System.in);
-        String res = sc.nextLine();
-        if(res.endsWith(resBD)){
+        System.out.println(BDnumC.stripTrailingZeros().toPlainString()+" / "+BDnumB.stripTrailingZeros().toPlainString()+" =?");
+        double resBD= BDnumA.doubleValue();
+        String Res = sc.nextLine();
+        double res;
+        try {
+        	res = Double.parseDouble(Res);
+		} catch (Exception e) {
+			return false;
+		}
+        if(res == resBD){
             return true;
         }else{
             return false;
