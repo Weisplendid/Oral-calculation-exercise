@@ -16,7 +16,7 @@ public class Grade12Method {
 		int[] result = new int[n];
 		String[] questions = new String[n];
 		for (int i = 0; i < n; i++) {
-			op[i] = (int) (Math.random() * 4); // 运算符
+			op[i] = (int) (Math.random() * 2); // 运算符
 			a = (int) (Math.random() * 89) + 10; // 数a
 			b = (int) (Math.random() * 89) + 10; // 数b
 			System.out.println(a + getOp(op[i]) + b + "=?");
@@ -25,9 +25,9 @@ public class Grade12Method {
 			result[i] = calulate(a, b, op[i]); // 正确答案
 			if (s[i] == result[i]) {
 				//sum++;
-				return ture;              //正确输出ture
+			        return ture;              //正确输出ture
 			} else {
-			    return false;             //错误输出false
+			        return false;             //错误输出false
 			//questions[i] = a + getOp(op[i]) + b + "=" + result[i];
 		}
 		// 最后的输出
