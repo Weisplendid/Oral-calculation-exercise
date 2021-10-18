@@ -17,6 +17,28 @@ public class Weisplendid_float {
         System.out.println(float_cal_div());
     }
     
+    
+    static bool float_calculate() {
+        bool res;
+        Random r = new Random();
+        int num = r.nextInt(4);
+        switch(num) {
+            case 0:
+                res = float_cal_plus()
+                break;
+            case 1:
+                res = float_cal_sub()
+                break;
+            case 2:
+                res = float_cal_mtu()
+                break;
+            case 3:
+                res = float_cal_div()
+                break;
+        }
+        return res;
+    }
+    
     static boolean float_cal_plus(){
         Random r = new Random();
         int num1 = r.nextInt(10000);
